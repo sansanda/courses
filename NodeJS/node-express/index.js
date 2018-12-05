@@ -3,6 +3,8 @@ const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const dishRouter = require('./routes/dishRouter');
+const promoutionRouter = require('./routes/promoutionRouter');
+const leaderRouter = require('./routes/leaderRouter');
 
 
 
@@ -15,6 +17,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(express.static(__dirname+'/public'));
 app.use('/dishes',dishRouter);
+app.use('/promoutions',promoutionRouter);
+app.use('/leaders',leaderRouter);
+
 
 app.use((req,res,next)=>{
 
