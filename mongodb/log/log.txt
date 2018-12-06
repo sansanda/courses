@@ -1,0 +1,15 @@
+2018-12-06T10:10:01.462+0100 I CONTROL  [initandlisten] MongoDB starting : pid=4092 port=27017 dbpath=E:\data\db\ 64-bit host=gh-PC
+2018-12-06T10:10:01.462+0100 I CONTROL  [initandlisten] targetMinOS: Windows 7/Windows Server 2008 R2
+2018-12-06T10:10:01.462+0100 I CONTROL  [initandlisten] db version v4.0.4
+2018-12-06T10:10:01.462+0100 I CONTROL  [initandlisten] git version: f288a3bdf201007f3693c58e140056adf8b04839
+2018-12-06T10:10:01.462+0100 I CONTROL  [initandlisten] allocator: tcmalloc
+2018-12-06T10:10:01.463+0100 I CONTROL  [initandlisten] modules: none
+2018-12-06T10:10:01.463+0100 I CONTROL  [initandlisten] build environment:
+2018-12-06T10:10:01.463+0100 I CONTROL  [initandlisten]     distmod: 2008plus-ssl
+2018-12-06T10:10:01.463+0100 I CONTROL  [initandlisten]     distarch: x86_64
+2018-12-06T10:10:01.463+0100 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-12-06T10:10:01.463+0100 I CONTROL  [initandlisten] options: { systemLog: { destination: "file", path: "log\log.txt" } }
+2018-12-06T10:10:01.464+0100 I STORAGE  [initandlisten] exception in initAndListen: NonExistentPath: Data directory E:\data\db\ not found., terminating
+2018-12-06T10:10:01.464+0100 I NETWORK  [initandlisten] shutdown: going to close listening sockets...
+2018-12-06T10:10:01.464+0100 I CONTROL  [initandlisten] now exiting
+2018-12-06T10:10:01.464+0100 I CONTROL  [initandlisten] shutting down with code:100
