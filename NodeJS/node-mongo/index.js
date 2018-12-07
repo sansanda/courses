@@ -16,36 +16,32 @@ function checkDatabaseExistence(_db,_dbname)
     });
 }
 
-function dbConnectResult(err,client) {
-
-    assert.equal(err,null,err);
+MongoClient.connect(url,{ connectTimeoutMS: 5000 })
+.then((client)=>{
     console.log('Connected correctly to server');
     const db = client.db(dbname);
-    dboper.insertDocument(db, { name: "Vadonut", description: "Test"},
-    "dishes", (result) => {
-        console.log("Insert Document:\n", result.ops);
+    dboper.insertDocument(db, { name: "Vadonut", description: "Test"},"dishes")
+    .then((insertDocumentResult)=>{
+        console.log("Insert Document:\n", insertDocumentResult.ops);
+        return dboper.findDocuments(db, "dishes");
+    })
+    .then((foundDocs) => {
+        console.log("Found Documents:\n", foundDocs);
+        return dboper.updateDocument(db, { name: "Vadonut" },{ description: "Updated Test" }, "dishes");
+    })
+    .then((updateResult) => {
+        console.log("Updated Document:\n", updateResult.result);
+        return dboper.findDocuments(db, "dishes");
+    })
+    .then((foundDocs) => {
+        console.log("Found Updated Documents:\n", foundDocs);                
+        return db.dropCollection("dishes");
+    })
+    .then((dropResult) => {
+        console.log("Dropped Collection: ", dropResult);
 
-        dboper.findDocuments(db, "dishes", (docs) => {
-            console.log("Found Documents:\n", docs);
-
-            dboper.updateDocument(db, { name: "Vadonut" },
-                { description: "Updated Test" }, "dishes",
-                (result) => {
-                    console.log("Updated Document:\n", result.result);
-
-                    dboper.findDocuments(db, "dishes", (docs) => {
-                        console.log("Found Updated Documents:\n", docs);
-                        
-                        db.dropCollection("dishes", (result) => {
-                            console.log("Dropped Collection: ", result);
-
-                            client.close();
-                        });
-                    });
-                });
-        });
-    });
-    
-}
-
-MongoClient.connect(url,{ connectTimeoutMS: 5000 },dbConnectResult);
+        return client.close();
+    })
+    .catch((err) => console.log(err));  
+})
+.catch((err)=>{console.log(err);});
