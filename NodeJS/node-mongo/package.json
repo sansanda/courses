@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"echo \"starting app\" && node index"
+    "start": "echo \"starting app\" && node index"
   },
   "author": "DDavid Sanchez",
   "license": "ISC",
   "dependencies": {
+    "assert": "^1.4.1",
     "mongodb": "^3.0.10"
   }
 }
