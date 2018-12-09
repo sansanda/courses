@@ -3,14 +3,18 @@ const bodyParser = require('body-parser');
 const dishRouter = express.Router();
 dishRouter.use(bodyParser.json());
 
+const mongoose = require('mongoose');
+const dishModel = require('../models/dishModel');
+
+
+
 dishRouter.route('/')
-.all((req,res,next)=>{
-    res.statusCode = 200;
-    res.setHeader('Content-Type','text/html');
-    next();
-})
 .get((req,res,next)=>{
-    res.end('We will send the dishes to you');
+    dishModel.find({}).then((dishes)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','text/html');
+        res.json(dishes);
+    },)
 })
 .post((req,res,next)=>{
     res.end('We will add the dishes: ' + req.body.name + ' with details ' + req.body.description);

@@ -10,6 +10,16 @@ var dishRouter = require('./routes/dishRouter');
 var promoutionRouter = require('./routes/promoutionRouter');
 var leaderRouter = require('./routes/leaderRouter');
 
+const mongoose = require('mongoose');
+const dishesModel = require('./models/dishesModel');
+const url = 'mongodb://localhost:21017/conFusion';
+const connect = mongoose.connect(url);
+
+connect.then(
+  (db)=>{
+    console.log('Connection correctly established to the DB Server.');
+}, (err)=>{console.log(error);});
+
 var app = express();
 
 // view engine setup
