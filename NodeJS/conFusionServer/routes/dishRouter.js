@@ -14,6 +14,7 @@ dishRouter.route('/')
         res.statusCode = 200;
         res.setHeader('Content-Type','text/html');
         res.json(dishes);
+        
     },)
 })
 .post((req,res,next)=>{
