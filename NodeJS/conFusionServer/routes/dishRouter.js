@@ -4,51 +4,76 @@ const dishRouter = express.Router();
 dishRouter.use(bodyParser.json());
 
 const mongoose = require('mongoose');
-const dishModel = require('../models/dishModel');
+const dishesModel = require('../models/dishesModel');
 
 
 
 dishRouter.route('/')
 .get((req,res,next)=>{
-    dishModel.find({}).then((dishes)=>{
+    dishesModel.find({})
+    .then((dishes)=>{
         res.statusCode = 200;
         res.setHeader('Content-Type','text/html');
         res.json(dishes);
-        
-    },)
+    },(err)=>next(err))
+    .catch((err)=>next(err));
 })
 .post((req,res,next)=>{
-    res.end('We will add the dishes: ' + req.body.name + ' with details ' + req.body.description);
+    dishesModel.create(req.body)
+    .then((dish)=>{
+        console.log("Created dish", dish);
+        res.statusCode = 200;
+        res.setHeader('Content-Type','text/html');
+        res.json(dish);
+    },(err)=>next(err))
+    .catch((err)=>next(err));
 })
 .put((req,res,next)=>{
     res.statusCode = 403;
     res.end('PUT Operation not supported on /dishes');
 })
 .delete((req,res,next)=>{
-    res.end('Deliting all the dishes!');
+    dishesModel.remove({})
+    .then((resp)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','text/html');
+        res.json(resp);
+    },(err)=>next(err))
+    .catch((err)=>next(err));
 });
 
 
 dishRouter.route('/:dishId')
-.all((req,res,next)=>{
-    res.statusCode = 200;
-    res.setHeader('Content-Type','text/html');
-    next();
-
-})
 .get((req,res,next)=>{
-    res.end('We will send details of the dish: '+req.params.dishId + ' to you');
+    dishesModel.findById(req.params.dishId)
+    .then((dish)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','text/html');
+        res.json(dish);
+    },(err)=>next(err))
+    .catch((err)=>next(err));
 })
 .post((req,res,next)=>{
     res.statusCode = 403;
     res.end('POST Operation not supported on: ' + req.params.dishId);
 })
 .put((req,res,next)=>{
-    res.write('Updating the dish: ' + req.params.dishId + '\n');
-    res.end('We will update the dish: ' + req.body.name + ' with details ' + req.body.description);
+    dishesModel.findByIdAndUpdate(req.params.dishId,{$set:req.body},{new: true})
+    .then((dish)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','text/html');
+        res.json(dish);
+    },(err)=>next(err))
+    .catch((err)=>next(err));    
 })
 .delete((req,res,next)=>{
-    res.end('Deliting dish: ' + req.params.dishId);
+    dishesModel.findByIdAndRemove(req.params.dishId)
+    .then((resp)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','text/html');
+        res.json(resp);
+    },(err)=>next(err))
+    .catch((err)=>next(err));
 });
 
 

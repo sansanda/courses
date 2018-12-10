@@ -12,13 +12,17 @@ var leaderRouter = require('./routes/leaderRouter');
 
 const mongoose = require('mongoose');
 const dishesModel = require('./models/dishesModel');
-const url = 'mongodb://localhost:21017/conFusion';
+const url = 'mongodb://localhost:27017/conFusion';
 const connect = mongoose.connect(url);
 
-connect.then(
+connect
+.then(
   (db)=>{
     console.log('Connection correctly established to the DB Server.');
-}, (err)=>{console.log(error);});
+}, (err)=>{console.log(error);})
+.catch(
+  (err)=>{console.log("Error connecting to the DB");}
+);
 
 var app = express();
 
