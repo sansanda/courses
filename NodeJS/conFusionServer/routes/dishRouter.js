@@ -76,5 +76,37 @@ dishRouter.route('/:dishId')
     .catch((err)=>next(err));
 });
 
+dishRouter.route('/:dishId/comments')
+.all((req,res,next)=>{
+    console.log("looking for comments");
+    dishesModel.findById(req.params.dishId)
+    .then((dish)=>{
+        if (dish==null){
+            err = new Error("Dish: " + req.params.dishId + " not found!!!");
+            err.status = 404;
+            return next(err);
+        }else {next();}
+    },(err)=>next(err))
+    .catch((err)=>next(err));
+})
+.get((req,res,next)=>{
+    dishesModel.findById(req.params.dishId)
+    .then((dish)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','application/json');
+        res.json(dish.comments);
+        //next(new Error("Test error"));
+    },(err)=>next(err))
+    .catch((err)=>next(err));
+})
+.post((req,res,next)=>{
+    console.log("post on /:dishId/comments/");
+})
+.put((req,res,next)=>{
+    console.log("put on /:dishId/comments/");  
+})
+.delete((req,res,next)=>{
+    console.log("delete on /:dishId/comments/");
+});
 
 module.exports = dishRouter;
